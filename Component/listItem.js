@@ -11,7 +11,7 @@ const ListItem = (props) => {
     >
       <Image
         style={{width: 220, height: 380, margin: 10}}
-        source={{uri: uploadUrl + item.thumbnails?.w160}}
+        source={{uri: uploadUrl + item.thumbnails?.w640}}
       />
       <View>
         <Text
