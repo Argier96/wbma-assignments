@@ -3,10 +3,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {uploadUrl} from '../utils/variables';
 
-const ListItem = (props) => {
-  const item = props.singleMedia;
+const ListItem = ({singleMedia, navigation}) => {
+  const item = singleMedia;
   return (
     <TouchableOpacity
+      onPress={() => {
+        navigation.navigate('Single', item);
+      }}
       style={{backgroundColor: 'grey', marginTop: 10, height: 400}}
     >
       <Image
@@ -41,5 +44,6 @@ const ListItem = (props) => {
 
 ListItem.propTypes = {
   singleMedia: PropTypes.object,
+  navigation: PropTypes.object,
 };
 export default ListItem;
