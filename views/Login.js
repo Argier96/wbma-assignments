@@ -1,14 +1,32 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {StyleSheet, View, Text, Button} from 'react-native';
 import PropTypes from 'prop-types';
 import {MainContext} from '../contexts/MainContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({navigation}) => {
   const [isLoggedIn, setIsLoggedIn] = useContext(MainContext);
   console.log('login isLoggedIn', isLoggedIn);
-  const logIn = () => {
+
+  const logIn = async () => {
     setIsLoggedIn(true);
+    await AsyncStorage.setItem('userToken', 'abc');
   };
+  const checkToken = async () => {
+    try {
+      const userToken = await AsyncStorage.getItem('userToken');
+      console.log('token', userToken);
+      if (userToken === 'abc') {
+        setIsLoggedIn(true);
+      }
+    } catch (error) {
+      console.log('not working', error);
+    }
+  };
+
+  useEffect(() => {
+    checkToken();
+  }, []);
   return (
     <View style={styles.container}>
       <Text>Login</Text>

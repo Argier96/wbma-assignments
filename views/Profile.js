@@ -2,12 +2,14 @@ import React, {useContext} from 'react';
 import {StyleSheet, SafeAreaView, Text, Button} from 'react-native';
 import {MainContext} from '../contexts/MainContext';
 import PropTypes from 'prop-types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Profile = ({navigation}) => {
   const [isLoggedIn, setIsLoggedIn] = useContext(MainContext);
   console.log('profile isLoggedIn', isLoggedIn);
-  const logout = () => {
+  const logout = async () => {
     setIsLoggedIn(false);
+    await AsyncStorage.clear();
   };
   return (
     <SafeAreaView style={styles.container}>
