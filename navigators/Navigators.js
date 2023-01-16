@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import Home from '../views/Home';
@@ -7,6 +7,7 @@ import Single from '../views/Single';
 import Login from '../views/Login';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {MainContext} from '../contexts/MainContext';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -35,7 +36,7 @@ const TabScreen = () => {
 };
 
 const StackScreen = () => {
-  const isLoggedIn = true;
+  const [isLoggedIn] = useContext(MainContext);
   return (
     <Stack.Navigator>
       {isLoggedIn ? (

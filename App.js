@@ -1,9 +1,12 @@
+import {MainProvider} from './contexts/MainContext';
 import Navigator from './navigators/Navigators';
 
 const App = () => {
   return (
     <>
-      <Navigator />
+      <MainProvider>
+        <Navigator />
+      </MainProvider>
     </>
   );
 };
