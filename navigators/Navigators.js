@@ -59,7 +59,7 @@ const StackScreen = () => {
 
 const Navigator = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer style={{color: 'black'}}>
       <StackScreen />
     </NavigationContainer>
   );

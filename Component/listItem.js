@@ -10,29 +10,39 @@ const ListItem = ({singleMedia, navigation}) => {
       onPress={() => {
         navigation.navigate('Single', item);
       }}
-      style={{backgroundColor: 'grey', marginTop: 10, height: 400}}
+      style={{backgroundColor: '#242834', marginTop: 10, height: 430}}
     >
       <Image
-        style={{width: 220, height: 380, margin: 10}}
+        style={{
+          width: 200,
+          height: 380,
+          margin: 10,
+          borderBottomLeftRadius: 100,
+          borderTopLeftRadius: 10,
+          borderTopRightRadius: 10,
+          borderBottomRightRadius: 10,
+        }}
         source={{uri: uploadUrl + item.thumbnails?.w640}}
       />
       <View>
         <Text
           style={{
             fontStyle: 'bold',
-            fontSize: 25,
-            right: -250,
-            top: -370,
+            color: 'white',
+            fontSize: 18,
+            right: -230,
+            top: -380,
           }}
         >
           {item.title}
         </Text>
         <Text
           style={{
-            right: -240,
+            right: -230,
             top: -370,
             marginRight: 250,
-            fontSize: 15,
+            fontSize: 10,
+            color: 'white',
           }}
         >
           {item.description}
