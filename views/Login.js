@@ -3,30 +3,41 @@ import {StyleSheet, View, Text, Button} from 'react-native';
 import PropTypes from 'prop-types';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useAuthentication, useUser} from '../Hooks/ApiHooks';
 
 const Login = ({navigation}) => {
-  const [isLoggedIn, setIsLoggedIn] = useContext(MainContext);
-  console.log('login isLoggedIn', isLoggedIn);
+  const {setIsLoggedIn} = useContext(MainContext);
+  const {postLogin} = useAuthentication();
+  const {getUserByToken} = useUser();
 
   const logIn = async () => {
-    setIsLoggedIn(true);
-    await AsyncStorage.setItem('userToken', 'abc');
+    console.log('Login button pressed');
+    const data = {username: 'riteshg', password: '@Alluz12rg'};
+    try {
+      const loginResult = await postLogin(data);
+      console.log('logIn', loginResult);
+      await AsyncStorage.setItem('userToken', loginResult.token);
+      setIsLoggedIn(true);
+    } catch (error) {
+      console.error('logIn', error);
+    }
   };
+
   const checkToken = async () => {
     try {
       const userToken = await AsyncStorage.getItem('userToken');
-      console.log('token', userToken);
-      if (userToken === 'abc') {
-        setIsLoggedIn(true);
-      }
+      const userData = await getUserByToken(userToken);
+      console.log('checkToken', userData);
+      setIsLoggedIn(true);
     } catch (error) {
-      console.log('not working', error);
+      console.error('checkToken', error);
     }
   };
 
   useEffect(() => {
     checkToken();
   }, []);
+
   return (
     <View style={styles.container}>
       <Text>Login</Text>
