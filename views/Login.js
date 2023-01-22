@@ -8,7 +8,7 @@ import LoginForm from '../Component/LoginForm';
 import RegisterForm from '../Component/RegisterForm';
 
 const Login = ({navigation}) => {
-  const {setIsLoggedIn} = useContext(MainContext);
+  const {setIsLoggedIn, setUser} = useContext(MainContext);
   const {getUserByToken} = useUser();
 
   const checkToken = async () => {
@@ -17,6 +17,7 @@ const Login = ({navigation}) => {
       if (userToken === null) return;
       const userData = await getUserByToken(userToken);
       console.log('checkToken', userData);
+      setUser(userData);
       setIsLoggedIn(true);
     } catch (error) {
       console.error('checkToken', error);
