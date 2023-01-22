@@ -5,6 +5,7 @@ import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useUser} from '../Hooks/ApiHooks';
 import LoginForm from '../Component/LoginForm';
+import RegisterForm from '../Component/RegisterForm';
 
 const Login = ({navigation}) => {
   const {setIsLoggedIn} = useContext(MainContext);
@@ -29,6 +30,7 @@ const Login = ({navigation}) => {
   return (
     <View style={styles.container}>
       <LoginForm />
+      <RegisterForm />
     </View>
   );
 };

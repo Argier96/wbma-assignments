@@ -46,8 +46,12 @@ const LoginForm = (props) => {
         )}
         name="username"
       />
-      {errors.username && <Text>Username incorrect.</Text>}
-      <Text> password:</Text>
+      {errors.username?.type === 'required' && (
+        <Text>Username is required.</Text>
+      )}
+      {errors.username?.type === 'minLength' && (
+        <Text>Username should have minimum 3 characters.</Text>
+      )}
       <Controller
         control={control}
         rules={{required: true, minLength: 5}}
@@ -62,7 +66,12 @@ const LoginForm = (props) => {
         )}
         name="password"
       />
-      {errors.password && <Text>Password incorrect.</Text>}
+      {errors.password?.type === 'required' && (
+        <Text>Password is required.</Text>
+      )}
+      {errors.password?.type === 'minLength' && (
+        <Text>Password should have minimum 5 characters.</Text>
+      )}
       <Button title="Sign in!" onPress={handleSubmit(logIn)} />
     </View>
   );
