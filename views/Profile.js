@@ -1,14 +1,32 @@
-import React, {useContext} from 'react';
-import {StyleSheet, SafeAreaView, Text, Button} from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import {StyleSheet, SafeAreaView, Text, Button, Image} from 'react-native';
 import {MainContext} from '../contexts/MainContext';
-import PropTypes from 'prop-types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useTag} from '../Hooks/ApiHooks';
+import {uploadUrl} from '../utils/variables';
 
-const Profile = ({navigation}) => {
+const Profile = () => {
+  const {getFilesByTag} = useTag();
   const {setIsLoggedIn, user, setUser} = useContext(MainContext);
+  const [avatar, setAvatar] = useState('');
+
+  const loadAvatar = async () => {
+    try {
+      const avatarArray = await getFilesByTag('avatar_' + user.user_id);
+      setAvatar(avatarArray.pop().filename);
+    } catch (error) {
+      console.error('user avatar fetch failed', error.message);
+    }
+  };
+
+  useEffect(() => {
+    loadAvatar();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <Text>Profile</Text>
+      <Image style={styles.image} source={{uri: uploadUrl + avatar}} />
       <Text>Username: {user.username}</Text>
       <Text>Email: {user.email}</Text>
       <Text>Full name: {user.full_name}</Text>
@@ -37,9 +55,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: 40,
   },
+  image: {
+    width: 500,
+    height: 400,
+  },
 });
-Profile.prototype = {
-  navigation: PropTypes.object,
-};
 
 export default Profile;
