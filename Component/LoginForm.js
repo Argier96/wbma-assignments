@@ -1,12 +1,11 @@
-import {Button, View, Text, TextInput} from 'react-native';
-import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 import {MainContext} from '../contexts/MainContext';
 import {useAuthentication} from '../Hooks/ApiHooks';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Controller, useForm} from 'react-hook-form';
+import {Button, Text, Input, Card} from '@rneui/themed';
 
-const LoginForm = (props) => {
+const LoginForm = () => {
   const {setIsLoggedIn} = useContext(MainContext);
   const {postLogin} = useAuthentication();
   const {
@@ -31,13 +30,13 @@ const LoginForm = (props) => {
   };
 
   return (
-    <View>
-      <Text>LoginForm</Text>
+    <Card>
+      <Card.Title>Login Form</Card.Title>
       <Controller
         control={control}
         rules={{required: true, minLength: 3}}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
+          <Input
             placeholder="Username"
             onBlur={onBlur}
             onChangeText={onChange}
@@ -46,17 +45,16 @@ const LoginForm = (props) => {
         )}
         name="username"
       />
-      {errors.username?.type === 'required' && (
-        <Text>Username is required.</Text>
-      )}
+      {/* TODO: Fix error messages for RNE components */}
+      {errors.username?.type === 'required' && <Text>is required</Text>}
       {errors.username?.type === 'minLength' && (
-        <Text>Username should have minimum 3 characters.</Text>
+        <Text>min length is 3 characters</Text>
       )}
       <Controller
         control={control}
         rules={{required: true, minLength: 5}}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
+          <Input
             placeholder="Password"
             onBlur={onBlur}
             onChangeText={onChange}
@@ -66,17 +64,10 @@ const LoginForm = (props) => {
         )}
         name="password"
       />
-      {errors.password?.type === 'required' && (
-        <Text>Password is required.</Text>
-      )}
-      {errors.password?.type === 'minLength' && (
-        <Text>Password should have minimum 5 characters.</Text>
-      )}
+      {errors.password && <Text>Password (min. 5 chars) is required .</Text>}
       <Button title="Sign in!" onPress={handleSubmit(logIn)} />
-    </View>
+    </Card>
   );
 };
-
-LoginForm.propTypes = {};
 
 export default LoginForm;

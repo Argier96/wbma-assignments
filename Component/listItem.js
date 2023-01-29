@@ -1,44 +1,24 @@
-import {Text, View, Image, TouchableOpacity} from 'react-native';
-import React from 'react';
 import PropTypes from 'prop-types';
 import {uploadUrl} from '../utils/variables';
+import {Avatar, ListItem as RNEListItem} from '@rneui/themed';
 
 const ListItem = ({singleMedia, navigation}) => {
   const item = singleMedia;
   return (
-    <TouchableOpacity
+    <RNEListItem
       onPress={() => {
         navigation.navigate('Single', item);
       }}
-      style={{backgroundColor: 'grey', marginTop: 10, height: 400}}
     >
-      <Image
-        style={{width: 220, height: 380, margin: 10}}
-        source={{uri: uploadUrl + item.thumbnails?.w640}}
-      />
-      <View>
-        <Text
-          style={{
-            fontStyle: 'bold',
-            fontSize: 25,
-            right: -250,
-            top: -370,
-          }}
-        >
-          {item.title}
-        </Text>
-        <Text
-          style={{
-            right: -240,
-            top: -370,
-            marginRight: 250,
-            fontSize: 15,
-          }}
-        >
+      <Avatar size="large" source={{uri: uploadUrl + item.thumbnails?.w160}} />
+      <RNEListItem.Content>
+        <RNEListItem.Title>{item.title}</RNEListItem.Title>
+        <RNEListItem.Subtitle numberOfLines={3}>
           {item.description}
-        </Text>
-      </View>
-    </TouchableOpacity>
+        </RNEListItem.Subtitle>
+      </RNEListItem.Content>
+      <RNEListItem.Chevron />
+    </RNEListItem>
   );
 };
 

@@ -1,5 +1,10 @@
 import React, {useContext, useEffect} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableOpacity,
+} from 'react-native';
 import PropTypes from 'prop-types';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -14,6 +19,7 @@ const Login = ({navigation}) => {
   const checkToken = async () => {
     try {
       const userToken = await AsyncStorage.getItem('userToken');
+      // if no token available, do nothing
       if (userToken === null) return;
       const userData = await getUserByToken(userToken);
       console.log('checkToken', userData);
@@ -29,21 +35,16 @@ const Login = ({navigation}) => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <LoginForm />
-      <RegisterForm />
-    </View>
+    <TouchableOpacity onPress={() => Keyboard.dismiss()} activeOpacity={1}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <LoginForm />
+        <RegisterForm />
+      </KeyboardAvoidingView>
+    </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 Login.propTypes = {
   navigation: PropTypes.object,

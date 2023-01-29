@@ -1,9 +1,9 @@
-import {Button, View, Text, TextInput} from 'react-native';
+import {Card, Button, Text, Input} from '@rneui/themed';
 import React from 'react';
 import {useUser} from '../Hooks/ApiHooks';
 import {Controller, useForm} from 'react-hook-form';
 
-const RegisterForm = (props) => {
+const RegisterForm = () => {
   const {postUser} = useUser();
   const {
     control,
@@ -25,13 +25,13 @@ const RegisterForm = (props) => {
   };
 
   return (
-    <View>
-      <Text>Registeration Form</Text>
+    <Card>
+      <Card.Title>Registration Form</Card.Title>
       <Controller
         control={control}
         rules={{required: true, minLength: 3}}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
+          <Input
             placeholder="Username"
             onBlur={onBlur}
             onChangeText={onChange}
@@ -40,6 +40,7 @@ const RegisterForm = (props) => {
         )}
         name="username"
       />
+      {/* TODO: Fix error messages for RNE components */}
       {errors.username?.type === 'required' && <Text>is required</Text>}
       {errors.username?.type === 'minLength' && (
         <Text>min length is 3 characters</Text>
@@ -48,7 +49,7 @@ const RegisterForm = (props) => {
         control={control}
         rules={{required: true, minLength: 5}}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
+          <Input
             placeholder="Password"
             onBlur={onBlur}
             onChangeText={onChange}
@@ -63,7 +64,7 @@ const RegisterForm = (props) => {
         control={control}
         rules={{required: true}}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
+          <Input
             placeholder="Email"
             onBlur={onBlur}
             onChangeText={onChange}
@@ -77,7 +78,7 @@ const RegisterForm = (props) => {
         control={control}
         rules={{minLength: 3}}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
+          <Input
             placeholder="Full name"
             onBlur={onBlur}
             onChangeText={onChange}
@@ -91,10 +92,8 @@ const RegisterForm = (props) => {
       )}
 
       <Button title="Sign in!" onPress={handleSubmit(register)} />
-    </View>
+    </Card>
   );
 };
-
-RegisterForm.propTypes = {};
 
 export default RegisterForm;
