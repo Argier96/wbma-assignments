@@ -1,4 +1,5 @@
 const baseUrl = 'https://media.mw.metropolia.fi/wbma/';
-const uploadUrl = 'https://media.mw.metropolia.fi/wbma/uploads/';
+const uploadsUrl = 'https://media.mw.metropolia.fi/wbma/uploads/';
+const appId = 'wxs4ecdr5fv6gtyhui';
 
-export {uploadUrl, baseUrl};
+export {baseUrl, uploadsUrl, appId};
