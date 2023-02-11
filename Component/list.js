@@ -1,5 +1,4 @@
 import {FlatList} from 'react-native';
-import React from 'react';
 import ListItem from './listItem';
 import {useMedia} from '../Hooks/ApiHooks';
 import PropTypes from 'prop-types';
